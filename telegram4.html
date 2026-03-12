@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Telegram Curl Generator</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    width:420px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    margin-top:0;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    margin-bottom:15px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+textarea{
+    height:80px;
+}
+
+button{
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    background:#2b7cff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1f63cc;
+}
+
+.output{
+    background:#111;
+    color:#0f0;
+    padding:12px;
+    border-radius:6px;
+    font-size:13px;
+    margin-top:15px;
+    word-break:break-all;
+}
+
+.copy{
+    margin-top:10px;
+    background:#444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Telegram Curl Generator</h2>
+
+<label>Bot Token</label>
+<input id="token" placeholder="123456:ABC...">
+
+<label>Chat ID</label>
+<input id="chatid" placeholder="123456789">
+
+<label>Message</label>
+<textarea id="message" placeholder="Hello from Twitter Monitor!"></textarea>
+
+<button onclick="generate()">Generate Curl</button>
+
+<div class="output" id="result"></div>
+
+<button class="copy" onclick="copyCmd()">Copy Command</button>
+
+</div>
+
+<script>
+
+function generate(){
+
+let token=document.getElementById("token").value.trim();
+let chat=document.getElementById("chatid").value.trim();
+let msg=encodeURIComponent(document.getElementById("message").value.trim());
+
+let curl=`curl "https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&text=${msg}"`;
+
+document.getElementById("result").innerText=curl;
+}
+
+function copyCmd(){
+
+let text=document.getElementById("result").innerText;
+
+navigator.clipboard.writeText(text).then(()=>{
+alert("Copied!");
+});
+
+}
+
+</script>
+
+</body>
+</html>
